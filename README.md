@@ -20,7 +20,7 @@ Light-weight sample to show how to use the AWS Serverless Application Model (AWS
     ```
 3. Replace UNIQUE_NAME deploy.sh and remove.sh files with some unique name.
     ```
-    BUCKET="pet-store-api-deployment-workspace-UNIQUE_NAME"
+    BUCKET="zaha-crm-api-deployment-workspace-UNIQUE_NAME"
     ```
     Important: Bucket names must be unique for all AWS users.
 4. Run the following commands on your terminal:
@@ -43,5 +43,5 @@ Light-weight sample to show how to use the AWS Serverless Application Model (AWS
     Expected output:
     ```
     > ...
-    > remove_bucket: pet-store-api-deployment-workspace-UNIQUE_NAME
+    > remove_bucket: zaha-crm-api-deployment-workspace-UNIQUE_NAME
     ```

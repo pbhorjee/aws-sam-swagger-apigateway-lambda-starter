@@ -1,42 +1,58 @@
 AWSTemplateFormatVersion : "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
-Description: Pet Store Rest API Service
+Description: ZahaCRM Bulk Rest API Service
 
 Resources:
-  PetStoreApiGateway: 
+  ZahaCRMBulkApiGateway: 
     Type: AWS::Serverless::Api
     Properties:
       StageName: Prod
       DefinitionUri: ./swagger.yaml
-  PostPetFunction:
+  PostTriggerBulkFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: PostPetFunction
-      Runtime: python3.6
+      FunctionName: PostTriggerBulkFunction
+      Runtime: python3.12
       Handler: function.handler
-      CodeUri: ./lambda/postPet/
+      CodeUri: ./lambda/PostTriggerBulkFunction
       Events:
-        PostPetApi:
+        PostTriggerBulkApi:
           Type: Api
           Properties:
-            RestApiId: !Ref "PetStoreApiGateway"
-            Path: /pet
+            RestApiId: !Ref "ZahaCRMBulkApiGateway"
+            Path: /api/crm/bulk/
             Method: POST
       Policies:
         - AWSLambdaBasicExecutionRole
-  GetPetFunction:
+  PostBulkStatusFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: GetPetFunction
-      Runtime: python3.6
+      FunctionName: PostBulkStatusFunction
+      Runtime: python3.12
       Handler: function.handler
-      CodeUri: ./lambda/getPet/
+      CodeUri: ./lambda/PostBulkStatusFunction
       Events:
-        GetPetApi:
+        PostBulkStatusApi:
           Type: Api
           Properties:
-            RestApiId: !Ref "PetStoreApiGateway"
-            Path: /pet/{petId}
-            Method: GET
+            RestApiId: !Ref "ZahaCRMBulkApiGateway"
+            Path: /api/crm/bulk/{fileId}
+            Method: POST
+      Policies:
+        - AWSLambdaBasicExecutionRole
+  PostBulkDownloadFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: PostBulkDownloadFunction
+      Runtime: python3.12
+      Handler: function.handler
+      CodeUri: ./lambda/PostBulkDownloadFunction
+      Events:
+        PostBulkDownloadApi:
+          Type: Api
+          Properties:
+            RestApiId: !Ref "ZahaCRMBulkApiGateway"
+            Path: /api/crm/bulk/{fileId}/read
+            Method: POST
       Policies:
         - AWSLambdaBasicExecutionRole
