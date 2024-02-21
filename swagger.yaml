@@ -11,14 +11,12 @@ info:
     name: Apache 2.0
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0-oas3.1
-servers:
-  - url: http://abcdefghi.execute-api.us-east-1.amazonaws.com/api/crm
 paths:
-  /bulk:
+  /api/crm/bulk:
     post:
       summary: Triggers a bulk file create and zip.
       responses:
-        '200':
+        "200":
           description: Ok
           content:
             application/json:
@@ -31,21 +29,19 @@ paths:
                       type: object
                       properties:
                         id:
-                          type: integer
-                          default: 3453545345
-                      required:
-                        - id
+                          type: string
+                          default: "3453545345"
       x-amazon-apigateway-request-validators:
         basic:
           validateRequestParameters: false
       x-amazon-apigateway-integration:
         type: "aws_proxy"
         httpMethod: POST
-        uri: arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function::PostTriggerBulkFunction/invocations
+        uri: arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:PostTriggerBulkFunction/invocations
         responses:
           default:
             statusCode: 200
-  /bulk/{fileId}:
+  /api/crm/bulk/{fileId}:
     post:
       summary: Returns Completion Status by fileId as ID.
       parameters:
@@ -56,7 +52,7 @@ paths:
             type: integer
             format: int64
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -69,17 +65,15 @@ paths:
                       type: object
                       properties:
                         id:
-                          type: integer
-                          default: 3453545345
+                          type: string
+                          default: "3453545345"
                         status:
                           type: string
+                          default: submitted
                           enum:
                             - submitted
                             - processing
                             - completed
-                      required:
-                        - id
-                        - status
       x-amazon-apigateway-request-validators:
         basic:
           validateRequestParameters: false
@@ -90,7 +84,7 @@ paths:
         responses:
           default:
             statusCode: 200
-  /bulk/{fileId}/read:
+  /api/crm/bulk/{fileId}/read:
     post:
       summary: Returns zipped file object.
       parameters:
@@ -101,13 +95,13 @@ paths:
             type: integer
             format: int64
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/zip:
               schema:
                 type: string
-                format: 
+                format: binary
       x-amazon-apigateway-request-validators:
         basic:
           validateRequestParameters: false

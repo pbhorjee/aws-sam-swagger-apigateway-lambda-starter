@@ -1,7 +1,13 @@
 AWSTemplateFormatVersion : "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: ZahaCRM Bulk Rest API Service
-
+Globals:
+  Api:
+    OpenApiVersion: 3.0.0
+Parameters:
+  environment:
+    Type: String
+    Default: Prod
 Resources:
   ZahaCRMBulkApiGateway: 
     Type: AWS::Serverless::Api
@@ -14,13 +20,13 @@ Resources:
       FunctionName: PostTriggerBulkFunction
       Runtime: python3.12
       Handler: function.handler
-      CodeUri: ./lambda/PostTriggerBulkFunction
+      CodeUri: ./lambda/PostTriggerBulkFunction 
       Events:
         PostTriggerBulkApi:
           Type: Api
           Properties:
             RestApiId: !Ref "ZahaCRMBulkApiGateway"
-            Path: /api/crm/bulk/
+            Path: /api/crm/bulk
             Method: POST
       Policies:
         - AWSLambdaBasicExecutionRole

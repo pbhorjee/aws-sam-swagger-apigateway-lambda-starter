@@ -3,41 +3,44 @@ import boto3
 import json
 import random
 
-s3 = boto3.client('s3')
+s3 = boto3.client("s3")
 
 def handler(event, context):
     number = random.randint(0,2)
     
     if number == 0:
         return {
-            'headers': { "Content-type": "application/json" },
-            'statusCode': 200,
-            'body': { 'RESULT': [
+            "isBase64Encoded": False,
+            "headers": { "Content-type": "application/json" },
+            "statusCode": 200,
+            "body": json.dumps({ "RESULT": [
                 {
-                    'id': 3453545345,
-                    'status': 'submitted'
+                    "id": "3453545345",
+                    "status": "submitted"
                 }
-            ]},
+            ]})
         }
     elif number == 1:
         return {
-            'headers': { "Content-type": "application/json" },
-            'statusCode': 200,
-            'body': { 'RESULT': [
+            "isBase64Encoded": False,
+            "headers": { "Content-type": "application/json" },
+            "statusCode": 200,
+            "body": json.dumps({ "RESULT": [
                 {
-                    'id': 3453545345,
-                    'status': 'processing'
+                    "id": "3453545345",
+                    "status": "processing"
                 }
-            ]},
+            ]})
         }
     else:
         return {
-            'headers': { "Content-type": "application/json" },
-            'statusCode': 200,
-            'body': { 'RESULT': [
+            "isBase64Encoded": False,
+            "headers": { "Content-type": "application/json" },
+            "statusCode": 200,
+            "body": json.dumps({ "RESULT": [
                 {
-                    'id': 3453545345,
-                    'status': 'completed'
+                    "id": "3453545345",
+                    "status": "completed"
                 }
-            ]},
+            ]})
         }

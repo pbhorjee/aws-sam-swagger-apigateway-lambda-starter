@@ -6,3 +6,5 @@ package.yaml
 
 # Misc Files
 .vscode/*
+
+metadata_report_clean.csv.zip
